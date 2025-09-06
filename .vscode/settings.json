@@ -1,0 +1,20 @@
+{
+    "dbcode.connections": [
+        {
+            "connectionId": "fuuOrRs7BXYmDVAALeG1U",
+            "name": "user-sayur-service",
+            "driver": "postgres",
+            "color": "#00634A",
+            "connectionType": "host",
+            "host": "localhost",
+            "port": 5432,
+            "ssl": false,
+            "username": "postgres",
+            "password": "",
+            "savePassword": "secretStorage",
+            "database": "sayur-user-service",
+            "readOnly": false,
+            "connectionTimeout": 30
+        }
+    ]
+}

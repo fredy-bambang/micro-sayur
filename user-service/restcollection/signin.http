@@ -1,0 +1,14 @@
+POST http://localhost:8080/signin
+Content-Type: application/json
+Accept: application/json
+
+{
+    "email": "superadmin@gmail.com",
+    "password": "admin123"
+}
+
+###
+GET http://localhost:8080/admin/check
+Content-Type: application/json
+Accept: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3NTY2MTgzMTQsImlzcyI6InNlY3JldCIsInVzZXJfaWQiOjF9.ehDDuxMKmTX_hTWZkFF5fbQjvBju1CqZJAFdmf57CZc

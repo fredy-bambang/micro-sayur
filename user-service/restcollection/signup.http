@@ -1,0 +1,22 @@
+POST http://localhost:8080/signup
+Content-Type: application/json
+Accept: application/json
+
+{
+	"name": "Fredy",
+	"email": "fredy.bambang@gmail.com",
+	"password": "fredy123",
+	"password_confirmation": "fredy123"
+}
+
+### 
+POST http://localhost:8080/signup
+Content-Type: application/json
+Accept: application/json
+
+{
+	"name": "Fredy 3",
+	"email": "fredy.bambang3@gmail.com",
+	"password": "fredy123",
+	"password_confirmation": "fredy123"
+}

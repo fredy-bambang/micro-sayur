@@ -20,6 +20,7 @@ type UserServiceInterface interface {
 	CreateUserAccount(ctx context.Context, req entity.UserEntity) error
 	ForgotPassword(ctx context.Context, req entity.UserEntity) error
 	VerifyToken(ctx context.Context, token string) (*entity.UserEntity, error)
+	UpdatePassword(ctx context.Context, req entity.UserEntity) error
 }
 
 type userService struct {
@@ -29,6 +30,33 @@ type userService struct {
 	repoToken  repository.VerificationTokenRepositoryInterface
 }
 
+func (u *userService) UpdatePassword(ctx context.Context, req entity.UserEntity) error {
+	token, err := u.repoToken.GetDataByToken(ctx, req.Token)
+	if err != nil {
+		log.Errorf("[UserService-13] UpdatePassword: %v", err)
+		return err
+	}
+	if token.TokenType != "reset_password" {
+		err = errors.New("401")
+		log.Errorf("[UserService-14] UpdatePassword: %v", err)
+		return err
+	}
+
+	password, err := conv.HashPassword(req.Password)
+	if err != nil {
+		log.Errorf("[UserService-15] UpdatePassword: %v", err)
+		return err
+	}
+	req.Password = password
+
+	err = u.repo.UpdatePasswordByID(ctx, req)
+	if err != nil {
+		log.Errorf("[UserService-16] UpdatePassword: %v", err)
+		return err
+	}
+
+	return nil
+}
 func (u *userService) VerifyToken(ctx context.Context, token string) (*entity.UserEntity, error) {
 	verifyToken, err := u.repoToken.GetDataByToken(ctx, token)
 	if err != nil {

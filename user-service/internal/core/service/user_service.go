@@ -108,7 +108,7 @@ func (u *userService) ForgotPassword(ctx context.Context, req entity.UserEntity)
 	reqEntity := entity.VerificationTokenEntity{
 		UserID:    user.ID,
 		Token:     token,
-		TokenType: "forgot_password",
+		TokenType: "reset_password",
 	}
 
 	err = u.repoToken.CreateVerificationToken(ctx, reqEntity)
@@ -119,7 +119,7 @@ func (u *userService) ForgotPassword(ctx context.Context, req entity.UserEntity)
 
 	urlForgot := fmt.Sprintf("%s/forgot-password?token=%s", u.cfg.App.UrlForgotPassword, token)
 	messageParam := fmt.Sprintf("Please click link below for reset password: %v", urlForgot)
-	err = message.PublishMessage(req.Email, messageParam, "forgot_password")
+	err = message.PublishMessage(req.Email, messageParam, "reset_password")
 	if err != nil {
 		log.Errorf("[UserService-10] ForgotPassword: %v", err)
 		return err

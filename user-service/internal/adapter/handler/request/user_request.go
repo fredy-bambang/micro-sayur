@@ -18,6 +18,6 @@ type ForgotPasswordRequest struct {
 
 type UpdatePasswordRequest struct {
 	CurrentPassword string `json:"password,omitempty"`
-	NewPassword     string `json:"new_password" validate:"required"`
+	NewPassword     string `json:"password_new" validate:"required"`
 	ConfirmPassword string `json:"password_confirmation" validate:"required"`
 }

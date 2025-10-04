@@ -48,6 +48,7 @@ func (u *userService) UpdatePassword(ctx context.Context, req entity.UserEntity)
 		return err
 	}
 	req.Password = password
+	req.ID = token.UserID
 
 	err = u.repo.UpdatePasswordByID(ctx, req)
 	if err != nil {
@@ -86,7 +87,7 @@ func (u *userService) VerifyToken(ctx context.Context, token string) (*entity.Us
 	}
 
 	redisConn := config.NewRedisClient()
-	err = redisConn.HSet(ctx, token, sessionData).Err()
+	err = redisConn.Set(ctx, token, sessionData, time.Hour*23).Err()
 	if err != nil {
 		log.Errorf("[UserService-4] SignIn: %v", err)
 		return nil, err
@@ -185,7 +186,7 @@ func (u *userService) SignIn(ctx context.Context, req entity.UserEntity) (*entit
 	}
 
 	redisConn := config.NewRedisClient()
-	err = redisConn.HSet(ctx, token, sessionData).Err()
+	err = redisConn.Set(ctx, token, sessionData, time.Hour*23).Err()
 	if err != nil {
 		log.Errorf("[UserService-4] SignIn: %v", err)
 		return nil, "", err

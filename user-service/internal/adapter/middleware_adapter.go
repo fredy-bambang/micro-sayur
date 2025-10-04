@@ -1,7 +1,6 @@
 package adapter
 
 import (
-	"fmt"
 	"net/http"
 	"strings"
 	"user-service/config"
@@ -33,8 +32,8 @@ func (m *middlewareAdapter) CheckToken() echo.MiddlewareFunc {
 			}
 
 			tokenString := strings.TrimPrefix(authHeader, "Bearer ")
-			fmt.Println("tokenString====" + tokenString + "\n")
-			getSession, err := redisConn.HGetAll(c.Request().Context(), tokenString).Result()
+			// fmt.Println("tokenString====" + tokenString + "\n")
+			getSession, err := redisConn.Get(c.Request().Context(), tokenString).Result()
 			if err != nil {
 				log.Errorf("[MiddlewareAdapter-2] CheckToken: %v", err)
 				respErr.Message = "Invalid Token"
